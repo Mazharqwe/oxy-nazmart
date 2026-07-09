@@ -1,0 +1,17 @@
+# --- Deployment artifacts (managed per-server, not via git) ---
+# These live at the web root and were causing "untracked files would be
+# overwritten by merge" conflicts on deploy. They are supplied on each
+# server directly (file upload / build step), so git should ignore them.
+/.htaccess
+/New Text Document.txt
+/_build/
+/assets/
+
+# --- Environment / secrets ---
+/core/.env
+
+# --- OS / editor junk ---
+.DS_Store
+**/.DS_Store
+**/__MACOSX/
+Thumbs.db
