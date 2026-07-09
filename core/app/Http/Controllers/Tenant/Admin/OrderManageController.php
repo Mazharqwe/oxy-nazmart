@@ -429,7 +429,18 @@ class OrderManageController extends Controller
         $thousand_separator = get_static_option('site_custom_currency_thousand_separator') ?? ',';
         $decimal_separator = get_static_option('site_custom_currency_decimal_separator') ?? '.';
 
-        $site_logo = get_attachment_image_by_id(get_static_option('site_logo'))['img_url'] ?? '';
+        // Use a local filesystem path for the invoice logo. The invoice library fetches the logo
+        // server-side with file_get_contents(); passing the public HTTPS URL fails when the tenant
+        // subdomain's SSL cert doesn't match (CN=tijaradropship.tech vs oxy.tijaradropship.tech).
+        $logo_data = get_attachment_image_by_id(get_static_option('site_logo'));
+        $site_logo = '';
+        if (!empty($logo_data['path'])) {
+            $tenant_dir = tenant() ? tenant()->id . '/' : '';
+            $local_logo = global_assets_path('assets/tenant/uploads/media-uploader/' . $tenant_dir . $logo_data['path']);
+            if (is_file($local_logo)) {
+                $site_logo = $local_logo;
+            }
+        }
 
         $taxPosition = get_static_option('invoice_tax_position') ?? 'total';
         $taxInfo = json_decode($payment_details->payment_meta);

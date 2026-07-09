@@ -55,8 +55,12 @@
                             <p class="mb-1"><strong>{{ __('Address') }}:</strong> {{ $order->address }}</p>
                         </div>
 
+                        @php
+                            // Browsable shop listing page (route('tenant.shop') is only the AJAX/JSON feed)
+                            $continue_shopping_url = route('tenant.dynamic.page', get_page_slug(get_static_option('shop_page'), 'shop_page'));
+                        @endphp
                         <div class="quantity-btn mt-5">
-                            <a href="{{ route('tenant.shop') }}" class="cmn-btn cmn-btn-bg-heading radius-0">
+                            <a href="{{ $continue_shopping_url }}" class="cmn-btn cmn-btn-bg-heading radius-0">
                                 {{ __('Continue Shopping') }}
                             </a>
                         </div>
