@@ -11,6 +11,7 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use App\Http\Controllers\Tenant\Frontend\ShopCreationController;
 use App\Http\Controllers\Tenant\Frontend\TenantFrontendController;
 use App\Http\Controllers\Tenant\Frontend\CheckoutPaymentController;
+use App\Http\Controllers\Tenant\Frontend\DirectOrderController;
 use App\Http\Middleware\Tenant\InitializeTenancyByDomainCustomisedMiddleware;
 use App\Http\Controllers\Tenant\Frontend\FrontendDigitalProductController;
 
@@ -117,6 +118,10 @@ Route::middleware([
         }
 
         Route::post('/product/buy/add', [TenantFrontendController::class, 'buy_now'])->name('shop.product.buy.now.ajax'); // Shop to Add to Cart
+
+        // Direct (Cash on Delivery) order — simple one-page checkout from the product page, bypasses the cart
+        Route::post('/product/direct-order', [DirectOrderController::class, 'store'])->name('shop.direct.order');
+        Route::get('/direct-order/success/{order}', [DirectOrderController::class, 'success'])->name('shop.direct.order.success');
 
         Route::get('/checkout', [CheckoutPaymentController::class, 'checkout_page'])->name('shop.checkout');
         Route::post('/checkout', [CheckoutPaymentController::class, 'checkout'])->name('shop.checkout.final');

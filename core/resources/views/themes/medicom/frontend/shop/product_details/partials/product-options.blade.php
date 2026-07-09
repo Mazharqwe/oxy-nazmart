@@ -128,41 +128,48 @@
         @endforeach
     </div>
 
-    <div class="quantity-area mt-4">
-        <div class="quantity-flex">
-            <span class="quantity-title color-heading fw-500"> {{__('Quantity:')}} </span>
-            <div class="product-quantity">
-                <span class="{{ $quickView ? "quick-view-" : "" }}substract  substract"><i
-                        class="las la-minus"></i></span>
-                <input class="{{ $quickView ? "quick-view-" : "" }}quantity-input quantity-input qty_" type="number"
-                       id="{{ $quickView ? "quick-view-" : "" }}quantity" name="quantity" value="1">
-                <span class="{{ $quickView ? "quick-view-" : "" }}plus plus"><i class="las la-plus"></i></span>
-            </div>
+    @php
+        if ($product?->inventory?->stock_count > 0)
+            {
+                $text_color = 'text-success';
+                $text = __('Only!').' '.$product?->inventory?->stock_count.' '.__('Item Left');
+            } else {
+                $text_color = 'text-danger';
+                $text = __('No Item Left!');
+            }
+    @endphp
 
-            @php
-                if ($product?->inventory?->stock_count > 0)
-                    {
-                        $text_color = 'text-success';
-                        $text = __('Only!').' '.$product?->inventory?->stock_count.' '.__('Item Left');
-                    } else {
-                        $text_color = 'text-danger';
-                        $text = __('No Item Left!');
-                    }
-            @endphp
-            <a class="stock-available color-stock {{$text_color}}" href="javascript:void(0)"
-               id="{{ $quickView ? "quick_view_" : "" }}item_left" data-stock-text="{{$text}}"> {{$text}} </a>
-        </div>
-        <div class="quantity-btn mt-4">
-            <div class="btn-wrapper">
-                <a href="javascript:void(0)"
-                   class="{{ $quickView ? "quick_view_add_to_cart" : "add_to_cart_single_page" }} cmn-btn cmn-btn-bg-heading radius-0 w-100 cart-loading">{{__('Add to Cart')}} </a>
+    {{-- Quick view keeps the standard quantity stepper + cart/buy buttons. --}}
+    {{-- Product page uses the direct Cash-on-Delivery "Order Now" form below. --}}
+    @if($quickView)
+        <div class="quantity-area mt-4">
+            <div class="quantity-flex">
+                <span class="quantity-title color-heading fw-500"> {{__('Quantity:')}} </span>
+                <div class="product-quantity">
+                    <span class="quick-view-substract  substract"><i class="las la-minus"></i></span>
+                    <input class="quick-view-quantity-input quantity-input qty_" type="number"
+                           id="quick-view-quantity" name="quantity" value="1">
+                    <span class="quick-view-plus plus"><i class="las la-plus"></i></span>
+                </div>
+                <a class="stock-available color-stock {{$text_color}}" href="javascript:void(0)"
+                   id="quick_view_item_left" data-stock-text="{{$text}}"> {{$text}} </a>
             </div>
-            <div class="btn-wrapper">
-                <a href="javascript:void(0)"
-                   class="{{ $quickView ? "quick_view_but_now" : "but_now_single_page" }}  cmn-btn cmn-btn-bg-steam radius-0 w-100 cart-loading"> {{__('Buy Now')}} </a>
+            <div class="quantity-btn mt-4">
+                <div class="btn-wrapper">
+                    <a href="javascript:void(0)"
+                       class="quick_view_add_to_cart cmn-btn cmn-btn-bg-heading radius-0 w-100 cart-loading">{{__('Add to Cart')}} </a>
+                </div>
+                <div class="btn-wrapper">
+                    <a href="javascript:void(0)"
+                       class="quick_view_but_now  cmn-btn cmn-btn-bg-steam radius-0 w-100 cart-loading"> {{__('Buy Now')}} </a>
+                </div>
             </div>
         </div>
-    </div>
+    @else
+        {{-- Hidden stock indicator kept so the variation JS (syncStock) can update it silently. --}}
+        <a class="d-none" href="javascript:void(0)" id="item_left" data-stock-text="{{$text}}"></a>
+        @include(include_theme_path('shop.product_details.partials.direct-order-form'))
+    @endif
 
         <div class="wishlist-share social_share_parent">
             @php

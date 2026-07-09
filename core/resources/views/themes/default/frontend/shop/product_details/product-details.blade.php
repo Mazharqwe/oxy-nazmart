@@ -963,4 +963,35 @@
             }
         });
     </script>
+
+    {{-- Direct (Cash on Delivery) Order form handling --}}
+    <script>
+        (function ($) {
+            'use strict';
+
+            // Toggle account-creation fields
+            $(document).on('change', '#do_create_account', function () {
+                $('.do-account-fields').toggle(this.checked);
+            });
+
+            // On submit: copy the chosen variation into the form and resolve its variant id
+            $(document).on('submit', '#direct_order_form', function (e) {
+                $('#do_selected_color').val($('#selected_color').val() || '');
+                $('#do_selected_size').val($('#selected_size').val() || '');
+
+                if (typeof attribute_store !== 'undefined' && attribute_store.length) {
+                    var selected = get_selected_options();
+                    var hash = getSelectionHash(selected);
+
+                    if (!additional_info_store[hash] || !additional_info_store[hash]['pid_id']) {
+                        e.preventDefault();
+                        toastr.error('{{ __("Please select available product options first.") }}');
+                        return false;
+                    }
+
+                    $('#do_product_variant').val(additional_info_store[hash]['pid_id']);
+                }
+            });
+        })(jQuery);
+    </script>
 @endsection
