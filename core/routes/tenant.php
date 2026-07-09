@@ -32,9 +32,9 @@ Route::middleware([
     'web',
     InitializeTenancyByDomainCustomisedMiddleware::class,
     PreventAccessFromCentralDomains::class,
-    // 'tenant_glvar',
-    // 'set_lang',
-    // 'maintenance_mode',
+    'tenant_glvar',
+    'set_lang',
+    'maintenance_mode',
 ])->group(function () {
     Route::middleware('package_expire')->controller(\App\Http\Controllers\Tenant\Frontend\TenantFrontendController::class)->group(function () {
         Route::get('/', 'homepage')->name('tenant.frontend.homepage');
