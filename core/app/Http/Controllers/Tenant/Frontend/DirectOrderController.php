@@ -170,6 +170,13 @@ class DirectOrderController extends Controller
                 'checkout_type'   => 'cod',
                 'payment_track'   => Str::random(10) . Str::random(10),
                 'order_details'   => json_encode($order_details),
+                // Order summary meta consumed by the admin order-view (subtotal/tax/shipping/total)
+                'payment_meta'    => json_encode([
+                    'subtotal'      => $total_amount,
+                    'product_tax'   => 0,
+                    'shipping_cost' => 0,
+                    'total'         => $total_amount,
+                ]),
             ]);
 
             OrderProducts::create([

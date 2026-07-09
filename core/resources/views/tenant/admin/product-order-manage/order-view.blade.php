@@ -20,6 +20,16 @@
 
                         @php
                             $order_meta = json_decode($order->payment_meta);
+
+                            // Fallback for orders without payment_meta (e.g. direct COD orders / legacy rows)
+                            if (empty($order_meta)) {
+                                $order_meta = (object)[
+                                    'subtotal'      => $order->total_amount,
+                                    'product_tax'   => 0,
+                                    'shipping_cost' => 0,
+                                    'total'         => $order->total_amount,
+                                ];
+                            }
                         @endphp
 
                         <!-- Order status start-->

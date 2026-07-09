@@ -47,7 +47,9 @@ class SalesReport
             }
 
 
-            $total_revenue += json_decode($order->payment_meta)->subtotal;
+            // Fall back to total_amount when payment_meta is missing (e.g. direct COD / legacy orders)
+            $order_meta = json_decode($order->payment_meta);
+            $total_revenue += $order_meta->subtotal ?? $order->total_amount ?? 0;
         }
 
         return [
