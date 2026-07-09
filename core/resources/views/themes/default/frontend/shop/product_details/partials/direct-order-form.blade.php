@@ -5,13 +5,19 @@
     $do_max_qty    = (int) ($stock_count > 0 ? min($stock_count, 10) : 0);
     // Scope cities to the store's country (set by super-admin per tenant); fall back to all if unset
     $do_store_country = tenant()->store_country ?? null;
-    $do_cities = \Modules\CountryManage\Entities\City::where('status', 1)
+    $do_cities = \Modules\CountryManage\Entities\City::where('status', 'publish')
         ->when($do_store_country, function ($q) use ($do_store_country) {
             $q->whereHas('country', function ($c) use ($do_store_country) {
                 $c->where('name', $do_store_country);
             });
         })
         ->orderBy('name')->get(['id', 'name']);
+
+    // Safety net: if the store country name doesn't match any city's country, don't leave the form unusable
+    if ($do_store_country && $do_cities->isEmpty()) {
+        $do_cities = \Modules\CountryManage\Entities\City::where('status', 'publish')
+            ->orderBy('name')->get(['id', 'name']);
+    }
 
     // Prefill: logged-in delivery address first, then the "remember me" cookie
     $do_user = auth('web')->user();
