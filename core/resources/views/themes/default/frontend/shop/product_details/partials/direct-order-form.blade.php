@@ -3,7 +3,15 @@
     $do_unit_price = calculatePrice($sale_price, $product);
     $do_currency   = site_currency_symbol();
     $do_max_qty    = (int) ($stock_count > 0 ? min($stock_count, 10) : 0);
-    $do_cities     = \Modules\CountryManage\Entities\City::where('status', 1)->orderBy('name')->get(['id', 'name']);
+    // Scope cities to the store's country (set by super-admin per tenant); fall back to all if unset
+    $do_store_country = tenant()->store_country ?? null;
+    $do_cities = \Modules\CountryManage\Entities\City::where('status', 1)
+        ->when($do_store_country, function ($q) use ($do_store_country) {
+            $q->whereHas('country', function ($c) use ($do_store_country) {
+                $c->where('name', $do_store_country);
+            });
+        })
+        ->orderBy('name')->get(['id', 'name']);
 
     // Prefill: logged-in delivery address first, then the "remember me" cookie
     $do_user = auth('web')->user();

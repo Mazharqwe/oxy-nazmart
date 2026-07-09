@@ -114,7 +114,8 @@ class TenantManageController extends Controller
     {
 
         $user = User::find($id);
-        return view(self::BASE_PATH . 'edit', compact('user'));
+        $tenant = Tenant::where('user_id', $id)->first();
+        return view(self::BASE_PATH . 'edit', compact('user', 'tenant'));
     }
 
     public function update_edit_profile(Request $request)
@@ -130,6 +131,12 @@ class TenantManageController extends Controller
             'address' => 'nullable',
             'image' => 'nullable',
             'company' => 'nullable',
+            'store_country' => 'nullable|string|max:191',
+        ]);
+
+        // Store-level country for the tenant (scopes the storefront direct-order city list)
+        Tenant::where('user_id', $request->id)->update([
+            'store_country' => $request->store_country,
         ]);
 
         User::where('id', $request->id)->update([

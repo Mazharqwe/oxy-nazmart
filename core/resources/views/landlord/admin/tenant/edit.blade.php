@@ -33,6 +33,10 @@
                     <x-fields.input type="text" name="mobile" value="{{$user->mobile}}" label="{{__('Mobile')}}"/>
 
                     <x-fields.country-select name="country" class="mb-4" value="{{$user->country}}" label="{{__('Country')}}"/>
+
+                    {{-- Store-level country: scopes the storefront direct-order (COD) city dropdown --}}
+                    <x-fields.country-select name="store_country" class="mb-4" value="{{ $tenant?->store_country }}" label="{{__('Store Country (storefront order form)')}}"/>
+
                     <x-fields.input type="text" name="city" value="{{$user->city}}" label="{{__('City')}}"/>
                     <x-fields.input type="text" name="state" value="{{$user->state}}" label="{{__('State')}}"/>
                     <x-fields.input type="text" name="company" value="{{$user->company}}" label="{{__('Company')}}"/>
