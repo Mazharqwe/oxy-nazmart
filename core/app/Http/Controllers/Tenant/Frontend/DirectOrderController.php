@@ -18,6 +18,7 @@ use Modules\Attributes\Entities\Color;
 use Modules\Attributes\Entities\Size;
 use Modules\Campaign\Entities\CampaignSoldProduct;
 use Modules\CountryManage\Entities\City;
+use Modules\CountryManage\Entities\State;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductInventory;
 use Modules\Product\Entities\ProductInventoryDetail;
@@ -80,10 +81,11 @@ class DirectOrderController extends Controller
         $unit_price   = calculatePrice($sale_price + $additional_price, $product); // tax-inclusive
         $total_amount = round($unit_price * $quantity, 2);
 
-        // Country / state derived from the chosen city
-        $city = City::find($data['city']);
-        $country_name = optional(optional($city)->country)->name;
-        $state_name   = optional(optional($city)->state)->name;
+        // Country / state: prefer the state chosen in the form, fall back to the city's linked state
+        $city  = City::find($data['city']);
+        $state = !empty($data['state']) ? State::find($data['state']) : null;
+        $country_name = optional(optional($city)->country)->name ?? optional(optional($state)->country)->name;
+        $state_name   = optional($state)->name ?? optional(optional($city)->state)->name;
 
         // Buyer resolution: logged-in > opt-in account creation > guest
         $auth_user = Auth::guard('web')->user();
@@ -117,8 +119,8 @@ class DirectOrderController extends Controller
                 'full_name'  => $data['name'],
                 'email'      => $data['email'],
                 'phone'      => $data['phone'],
-                'country_id' => optional($city)->country_id,
-                'state_id'   => optional($city)->state_id,
+                'country_id' => optional($city)->country_id ?? optional($state)->country_id,
+                'state_id'   => optional($state)->id ?? optional($city)->state_id,
                 'city'       => $data['city'],
                 'address'    => $data['address'],
             ]);
@@ -231,6 +233,7 @@ class DirectOrderController extends Controller
         $ttl = 60 * 24 * 365;
         Cookie::queue('direct_order_name', (string) $data['name'], $ttl);
         Cookie::queue('direct_order_phone', (string) $data['phone'], $ttl);
+        Cookie::queue('direct_order_state', (string) ($data['state'] ?? ''), $ttl);
         Cookie::queue('direct_order_city', (string) $data['city'], $ttl);
         Cookie::queue('direct_order_address', (string) $data['address'], $ttl);
         Cookie::queue('direct_order_email', (string) ($data['email'] ?? ''), $ttl);

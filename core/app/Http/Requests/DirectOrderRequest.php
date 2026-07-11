@@ -23,6 +23,7 @@ class DirectOrderRequest extends FormRequest
 
             'name'            => 'required|string|max:191',
             'phone'          => 'required|string|max:40',
+            'state'           => 'nullable|integer',       // CountryManage State id (field hidden when no states exist)
             'city'            => 'required|integer',       // CountryManage City id
             'address'         => 'required|string|max:500',
 

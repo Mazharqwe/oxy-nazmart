@@ -974,6 +974,35 @@
                 $('.do-account-fields').toggle(this.checked);
             });
 
+            // State → City dependent dropdown: only show cities of the chosen state.
+            // Cities not linked to any state (empty data-state) stay visible as a fallback.
+            var $doCity = $('#do_city');
+            if ($doCity.length && $('#do_state').length) {
+                var doCityOptions = $doCity.find('option').clone();
+
+                var doFilterCities = function () {
+                    var stateId = String($('#do_state').val() || '');
+                    var current = String($doCity.val() || '');
+
+                    $doCity.empty();
+                    doCityOptions.each(function () {
+                        var optState = String($(this).attr('data-state') || '');
+                        if (!$(this).val() || !stateId || !optState || optState === stateId) {
+                            $doCity.append($(this).clone());
+                        }
+                    });
+
+                    if (current && $doCity.find('option[value="' + current + '"]').length) {
+                        $doCity.val(current);
+                    } else {
+                        $doCity.val('');
+                    }
+                };
+
+                $(document).on('change', '#do_state', doFilterCities);
+                doFilterCities(); // respect a pre-filled state on page load
+            }
+
             // On submit: copy the chosen variation into the form and resolve its variant id
             $(document).on('submit', '#direct_order_form', function (e) {
                 $('#do_selected_color').val($('#selected_color').val() || '');
