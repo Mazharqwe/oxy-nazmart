@@ -1,8 +1,39 @@
-<header class="header-style-01">
+<header class="header-style-01 oxy-header">
     <!-- Menu area Starts -->
-    <nav class="navbar navbar-area navbar-expand-lg">
-        <div class="container container-one nav-container">
-            <div class="responsive-mobile-menu">
+    <nav class="navbar navbar-area navbar-expand-lg oxy-navbar">
+        <div class="container container-one nav-container oxy-nav-container">
+            <div class="oxy-nav-left">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#multi_tenancy_menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="search-suggestions-icon-wrapper">
+                    <div class="search-click-icon">
+                        <i class="las la-search"></i>
+                    </div>
+                    <div class="search-suggetions-show">
+                        <div class="navbar-input searchbar-suggetions">
+                            <form action="">
+                                <div class="search-open-form">
+                                    <input autocomplete="off" class="form--control" id="search_form_input" type="text" placeholder="{{__('Search here....')}}">
+                                    <button type="submit"> <i class="las la-search"></i> </button>
+                                    <span class="suggetions-icon-close"> <i class="las la-times"></i> </span>
+                                </div>
+                                <div class="search-suggestions" id="search_suggestions_wrap">
+                                    <div class="search-suggestions-inner">
+                                        <h6 class="search-suggestions-title">{{__('Product Suggestions')}}</h6>
+                                        <ul class="product-suggestion-list mt-4">
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="oxy-nav-center">
                 <div class="logo-wrapper">
                     @if(\App\Facades\GlobalLanguage::user_lang_dir() == 'rtl')
                         <a href="{{url('/')}}" class="logo">
@@ -18,48 +49,12 @@
                         </a>
                     @endif
                 </div>
+            </div>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#multi_tenancy_menu">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" id="multi_tenancy_menu">
-                <ul class="navbar-nav">
-                    {!! render_frontend_menu($primary_menu) !!}
-                </ul>
-            </div>
-            <div class="navbar-right-content show-nav-content">
+            <div class="navbar-right-content show-nav-content oxy-nav-right">
                 <div class="single-right-content">
-                    <div class="search-suggestions-icon-wrapper">
-                        <div class="search-click-icon">
-                            <i class="las la-search"></i>
-                        </div>
-                        <div class="search-suggetions-show">
-                            <div class="navbar-input searchbar-suggetions">
-                                <form action="">
-                                    <div class="search-open-form">
-                                        <input autocomplete="off" class="form--control" id="search_form_input" type="text" placeholder="{{__('Search here....')}}">
-                                        <button type="submit"> <i class="las la-search"></i> </button>
-                                        <span class="suggetions-icon-close"> <i class="las la-times"></i> </span>
-                                    </div>
-                                    <div class="search-suggestions" id="search_suggestions_wrap">
-                                        <div class="search-suggestions-inner">
-                                            <h6 class="search-suggestions-title">{{__('Product Suggestions')}}</h6>
-                                            <ul class="product-suggestion-list mt-4">
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     <div class="navbar-right-flex">
                         <div class="track-icon-list">
-                            <div class="single-icon cart-shopping">
-                                <a class="icon" href="{{route('tenant.shop.compare.product.page')}}"> <i class="las la-sync"></i> </a>
-                            </div>
-
                             <div class="single-icon cart-shopping">
                                 <a class="icon" href="javascript:void(0)"> <i class="lar la-heart"></i> </a>
                                 <a href="javascript:void(0)" class="icon-notification"> {{ \Gloudemans\Shoppingcart\Facades\Cart::instance("wishlist")->content()->count() }}  </a>
@@ -206,6 +201,14 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="container container-one oxy-nav-menu-row">
+            <div class="collapse navbar-collapse justify-content-center" id="multi_tenancy_menu">
+                <ul class="navbar-nav">
+                    {!! render_frontend_menu($primary_menu) !!}
+                </ul>
             </div>
         </div>
     </nav>

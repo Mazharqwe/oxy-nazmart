@@ -10,21 +10,18 @@
                      data-rtl="{{get_user_lang_direction() == 1 ? 'true' : 'false'}}">
                     @foreach($data['categories_info'] ?? [] as $category)
                         <div class="single-slider-item">
-                            <div class="single-category center-text">
-                                <div class="single-category-thumb">
-                                    <a href="{{route('tenant.shop.category.products', [$category->slug, 'category'])}}">
-                                        {!! render_image_markup_by_attachment_id($category->image_id) !!}
-                                    </a>
+                            <a href="{{route('tenant.shop.category.products', [$category->slug, 'category'])}}"
+                               class="oxy-category-tile">
+                                <div class="oxy-category-tile-thumb">
+                                    {!! render_image_markup_by_attachment_id($category->image_id) !!}
                                 </div>
-                                <div class="single-category-contents mt-4">
-                                    <h3 class="single-category-contents-title fw-400">
-                                        <a href="{{route('tenant.shop.category.products', [$category->slug, 'category'])}}">
-                                            {{$category->name}}
-                                        </a>
-                                    </h3>
-                                    <p class="single-product-item-contents-subtitle mt-2">{{$category->product_count ?? ''}}</p>
+                                <div class="oxy-category-tile-contents">
+                                    <h3 class="oxy-category-tile-title">{{$category->name}}</h3>
+                                    <span class="oxy-category-tile-subtitle">
+                                        {{__('Shop')}}{{isset($category->product_count) ? ' · '.$category->product_count : ''}}
+                                    </span>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     @endforeach
                 </div>

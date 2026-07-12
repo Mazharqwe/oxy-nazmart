@@ -26,34 +26,37 @@
                         @endphp
 
                         <div class="slick-slider-items wow {{$class}}" data-wow-delay=".{{$delay}}s">
-                            <div class="global-card center-text no-shadow radius-0 pb-0">
-                                <div class="global-card-thumb single-border">
+                            <div class="global-card oxy-product-card no-shadow pb-0">
+                                <div class="global-card-thumb">
                                     <a href="{{route('tenant.shop.product.details', $product->slug)}}">
                                         {!! render_image_markup_by_attachment_id($product->image_id) !!}
                                     </a>
-                                    <div class="global-card-thumb-badge right-side">
-                                        @if(!empty($discount))
-                                            <span class="global-card-thumb-badge-box bg-color-two"> {{$discount}}% {{__('off')}} </span>
-                                        @endif
+                                    @if(!empty($discount))
+                                        <span class="oxy-badge oxy-badge-discount"> {{$discount}}% {{__('OFF')}} </span>
+                                    @endif
 
-                                        @if(!empty($product->badge))
-                                            <span class="global-card-thumb-badge-box bg-color-new"> {{$product?->badge?->name}} </span>
-                                        @endif
-                                    </div>
+                                    @if(!empty($product->badge))
+                                        <span class="oxy-badge oxy-badge-tag"> {{$product?->badge?->name}} </span>
+                                    @endif
 
                                     @include('tenant.frontend.shop.partials.product-options')
                                 </div>
-                                <div class="global-card-contents">
+                                <div class="global-card-contents oxy-card-contents">
                                     <h5 class="global-card-contents-title">
                                         <a href="{{route('tenant.shop.product.details', $product->slug)}}"> {!! product_limited_text($product->name) !!} </a>
                                     </h5>
 
-                                    {!! render_product_star_rating_markup_with_count($product) !!}
-
-                                    <div class="price-update-through mt-3">
-                                        <span class="flash-prices color-two"> {{amount_with_currency_symbol(calculatePrice($sale_price, $product))}} </span>
+                                    <div class="price-update-through oxy-price mt-2">
+                                        <span class="flash-prices"> {{amount_with_currency_symbol(calculatePrice($sale_price, $product))}} </span>
                                         <span class="flash-old-prices"> {{$regular_price != null ? amount_with_currency_symbol($regular_price) : ''}} </span>
                                     </div>
+
+                                    @php
+                                        $oxy_tax_rate = optional($product->taxOptions->first())->rate;
+                                    @endphp
+                                    @if(!empty($oxy_tax_rate))
+                                        <span class="oxy-vat-note">{{$oxy_tax_rate + 0}}% - {{__('VAT included')}}</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>

@@ -35,7 +35,7 @@ class Header extends PageBuilderBase
                     'type' => RepeaterField::TEXT,
                     'label' => 'Title',
                     'name' => 'title',
-                    'info' => __('To show the highlighted text, place your word between this code {h}YourText{/h]')
+                    'info' => __('The first item becomes the large "All products" hero card; every following item becomes a category tile (title, image, URL, and button text as the small "Shop" label). To show the highlighted text, place your word between this code {h}YourText{/h]')
                 ],
                 [
                     'type' => RepeaterField::TEXT,
