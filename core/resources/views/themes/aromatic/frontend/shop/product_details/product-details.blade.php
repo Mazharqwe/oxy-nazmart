@@ -919,4 +919,65 @@
             }
         });
     </script>
+
+    {{-- Direct (Cash on Delivery) Order form handling --}}
+    <script>
+        (function ($) {
+            'use strict';
+
+            // Toggle account-creation fields
+            $(document).on('change', '#do_create_account', function () {
+                $('.do-account-fields').toggle(this.checked);
+            });
+
+            // State → City dependent dropdown: only show cities of the chosen state.
+            // Cities not linked to any state (empty data-state) stay visible as a fallback.
+            var $doCity = $('#do_city');
+            if ($doCity.length && $('#do_state').length) {
+                var doCityOptions = $doCity.find('option').clone();
+
+                var doFilterCities = function () {
+                    var stateId = String($('#do_state').val() || '');
+                    var current = String($doCity.val() || '');
+
+                    $doCity.empty();
+                    doCityOptions.each(function () {
+                        var optState = String($(this).attr('data-state') || '');
+                        if (!$(this).val() || !stateId || !optState || optState === stateId) {
+                            $doCity.append($(this).clone());
+                        }
+                    });
+
+                    if (current && $doCity.find('option[value="' + current + '"]').length) {
+                        $doCity.val(current);
+                    } else {
+                        $doCity.val('');
+                    }
+                };
+
+                $(document).on('change', '#do_state', doFilterCities);
+                doFilterCities(); // respect a pre-filled state on page load
+            }
+
+            // On submit: copy the chosen variation into the form and resolve its variant id
+            $(document).on('submit', '#direct_order_form', function (e) {
+                $('#do_selected_color').val($('#selected_color').val() || '');
+                $('#do_selected_size').val($('#selected_size').val() || '');
+
+                // Only enforce/resolve variants when the product actually has them
+                if (typeof attribute_store !== 'undefined' && attribute_store.length) {
+                    var selected = get_selected_options();
+                    var hash = getSelectionHash(selected);
+
+                    if (!additional_info_store[hash] || !additional_info_store[hash]['pid_id']) {
+                        e.preventDefault();
+                        toastr.error('{{ __("Please select available product options first.") }}');
+                        return false;
+                    }
+
+                    $('#do_product_variant').val(additional_info_store[hash]['pid_id']);
+                }
+            });
+        })(jQuery);
+    </script>
 @endsection
