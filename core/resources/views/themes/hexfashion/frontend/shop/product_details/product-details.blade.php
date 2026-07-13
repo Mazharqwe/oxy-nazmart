@@ -180,6 +180,104 @@
         .oxy-order-form-card form > .row {
             text-align: left;
         }
+        .oxy-size-color-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 20px;
+        }
+        .oxy-size-color-row .oxy-half {
+            flex: 1 1 200px;
+            min-width: 0;
+        }
+
+        /* ---- Size / Color / attribute pickers ---- */
+        .oxy-picker-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .oxy-picker-title strong {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1c1a16;
+        }
+        .oxy-picker-value.form--input {
+            border: none !important;
+            background: transparent !important;
+            padding: 0 !important;
+            width: auto !important;
+            max-width: 140px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #6b5940;
+            text-align: right;
+        }
+        .oxy-picker-value.form--input::placeholder { color: #a99f8b; font-weight: 400; }
+
+        .oxy-swatch-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 0;
+            list-style: none;
+        }
+        .oxy-swatch-list li.list {
+            cursor: pointer;
+            border: 1.5px solid #e9e4d8;
+            border-radius: 8px;
+            background: #f7f3ea;
+            min-width: 44px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1c1a16;
+            transition: all .15s ease;
+        }
+        .oxy-swatch-list li.list:hover { border-color: #cdbb8d; }
+        .oxy-swatch-list li.list.active {
+            background: #6b5940;
+            border-color: #6b5940;
+            color: #ffffff;
+        }
+        .oxy-swatch-list li.list.disabled {
+            opacity: .4;
+            cursor: not-allowed;
+        }
+
+        /* Color swatches: plain squares (no text) get a ring + check mark instead of bg/text swap */
+        .oxy-color-swatch-list li.list {
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
+            padding: 0;
+            border: 2px solid #ffffff;
+            outline: 1.5px solid #e9e4d8;
+            border-radius: 50%;
+            position: relative;
+        }
+        .oxy-color-swatch-list li.list:hover { outline-color: #cdbb8d; }
+        .oxy-color-swatch-list li.list.active {
+            outline: 2px solid #6b5940;
+        }
+        .oxy-color-swatch-list li.list .oxy-swatch-check {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: #ffffff;
+            text-shadow: 0 0 2px rgba(0,0,0,.7);
+            opacity: 0;
+        }
+        .oxy-color-swatch-list li.list.active .oxy-swatch-check { opacity: 1; }
         .oxy-order-form-card label,
         .oxy-order-form-card .input-title strong {
             font-weight: 600;

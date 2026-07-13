@@ -41,60 +41,64 @@
     @endif
 
     <div class="value-input-area">
-        @if($productSizes->count() > 0 && !empty(current(current($productSizes))))
-            <div
-                class="value-input-area single-input-list mt-4 size_list  {{ $quickView ? "quick-view-value-input-area" : "" }}">
-                    <span class="input-title fw-500 color-heading">
-                        <strong class="color-light"> {{ __('Size:') }} </strong>
-                        <input readonly class="form--input value-size" name="size" type="text" value="">
-                        <input type="hidden" id="selected_size">
-                    </span>
-                <ul class="size-lists select-list {{ $quickView ? "quick-view-size-lists" : "" }}" data-type="Size">
-                    @foreach($productSizes as $product_size)
-                        @if(!empty($product_size))
-                            <li class="list"
-                                data-value="{{ optional($product_size)->id }}"
-                                data-display-value="{{ optional($product_size)->name }}"
-                            > {{ optional($product_size)->size_code }} </li>
-                        @endif
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        <div class="oxy-size-color-row">
+            @if($productSizes->count() > 0 && !empty(current(current($productSizes))))
+                <div
+                    class="value-input-area single-input-list mt-4 size_list oxy-half {{ $quickView ? "quick-view-value-input-area" : "" }}">
+                        <span class="input-title fw-500 color-heading oxy-picker-title">
+                            <strong class="color-light"> {{ __('Select Size') }}<span class="text-danger">*</span> </strong>
+                            <input readonly class="form--input value-size oxy-picker-value" name="size" type="text" value="" placeholder="{{ __('Not selected') }}">
+                            <input type="hidden" id="selected_size">
+                        </span>
+                    <ul class="size-lists select-list oxy-swatch-list {{ $quickView ? "quick-view-size-lists" : "" }}" data-type="Size">
+                        @foreach($productSizes as $product_size)
+                            @if(!empty($product_size))
+                                <li class="list"
+                                    title="{{ optional($product_size)->name }}"
+                                    data-value="{{ optional($product_size)->id }}"
+                                    data-display-value="{{ optional($product_size)->name }}"
+                                > {{ optional($product_size)->size_code }} </li>
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-        @if($productColors->count() > 0 && current(current($productColors)))
-            <div
-                class="value-input-area single-input-list mt-4 color_list  {{ $quickView ? "quick-view-value-input-area" : "" }}">
-                    <span class="input-title fw-500 color-heading">
-                        <strong class="color-light"> {{ __('Color:') }} </strong>
-                        <input readonly class="form--input value-size" name="color" type="text" value="">
-                        <input type="hidden" id="selected_color">
-                    </span>
-                <ul class="size-lists color-list {{ $quickView ? "quick-view-size-lists" : "" }}" data-type="Color">
-                    @foreach($productColors as $product_color)
-                        @if(!empty($product_color))
-                            <li style="background-color: {{$product_color->color_code}}"
-                                data-value="{{ optional($product_color)->id }}"
-                                data-display-value="{{ optional($product_color)->name }}"
-                            ></li>
-                        @endif
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
+            @if($productColors->count() > 0 && current(current($productColors)))
+                <div
+                    class="value-input-area single-input-list mt-4 color_list oxy-half {{ $quickView ? "quick-view-value-input-area" : "" }}">
+                        <span class="input-title fw-500 color-heading oxy-picker-title">
+                            <strong class="color-light"> {{ __('Select Color') }}<span class="text-danger">*</span> </strong>
+                            <input readonly class="form--input value-size oxy-picker-value" name="color" type="text" value="" placeholder="{{ __('Not selected') }}">
+                            <input type="hidden" id="selected_color">
+                        </span>
+                    <ul class="size-lists color-list oxy-swatch-list oxy-color-swatch-list {{ $quickView ? "quick-view-size-lists" : "" }}" data-type="Color">
+                        @foreach($productColors as $product_color)
+                            @if(!empty($product_color))
+                                <li style="background-color: {{$product_color->color_code}}"
+                                    title="{{ optional($product_color)->name }}"
+                                    data-value="{{ optional($product_color)->id }}"
+                                    data-display-value="{{ optional($product_color)->name }}"
+                                ><i class="las la-check oxy-swatch-check"></i></li>
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
 
         @foreach($available_attributes as $attribute => $options)
             <div
                 class="value-input-area single-input-list mt-4 attribute_options_list  {{ $quickView ? "quick-view-value-input-area" : "" }}">
-                        <span class="input-title fw-500 color-heading input-list">
-                            <strong class="color-light"> {{ $attribute }} </strong>
-                            <input readonly class="form--input value-size" type="text" value="">
+                        <span class="input-title fw-500 color-heading input-list oxy-picker-title">
+                            <strong class="color-light"> {{ __('Select :attribute', ['attribute' => $attribute]) }}<span class="text-danger">*</span> </strong>
+                            <input readonly class="form--input value-size oxy-picker-value" type="text" value="" placeholder="{{ __('Not selected') }}">
                             <input type="hidden" id="selected_attribute_option" name="selected_attribute_option">
                         </span>
-                <ul class="size-lists {{ $quickView ? "quick-view-size-lists" : "" }}" data-type="{{ $attribute }}">
+                <ul class="size-lists oxy-swatch-list {{ $quickView ? "quick-view-size-lists" : "" }}" data-type="{{ $attribute }}">
                     @foreach($options as $option)
                         <li class="list"
+                            title="{{ $option }}"
                             data-value="{{ $option }}"
                             data-display-value="{{ $option }}"
                         > {{ $option }} </li>
