@@ -6,6 +6,16 @@
 /New Text Document.txt
 /_build/
 /assets/
+/core/bootstrap/cache/
+/core/vendor/
+/core/storage/logs/
+/core/storage/framework/
+/core/storage/framework/views/
+/core/storage/framework/cache/
+/core/storage/framework/sessions/
+/core/storage/framework/testing/
+
+
 
 # --- Environment / secrets ---
 /core/.env
