@@ -219,6 +219,21 @@
             flex: 0 0 auto;
         }
 
+        /* Label and its swatch row sit side by side on the same line, not label-then-wrap-below */
+        .oxy-order-form-card .single-input-list {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+        }
+        .oxy-order-form-card .single-input-list .input-title {
+            flex: 0 0 auto;
+        }
+        .oxy-order-form-card .single-input-list .size-lists {
+            margin-top: 0 !important;
+            flex: 1 1 auto;
+        }
+
         .oxy-order-form-card .form--input,
         .oxy-order-form-card select.form--input,
         .oxy-order-form-card textarea.form--input {
