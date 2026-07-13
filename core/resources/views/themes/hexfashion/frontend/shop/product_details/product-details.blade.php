@@ -202,9 +202,13 @@
             display: none !important;
         }
 
-        /* Selected color swatch: just the border highlight, no checkmark overlay (matches the size box) */
+        /* Selected color swatch: a clear, high-contrast ring — no checkmark overlay */
         .oxy-order-form-card .color-list li.active::before {
             content: none !important;
+        }
+        .oxy-order-form-card .color-list li.active {
+            border: 3px solid #6b5940 !important;
+            box-shadow: 0 0 0 2px #ffffff inset, 0 0 0 1px #6b5940;
         }
 
         /* Every box within the Size row is the same size as each other; same for the Color row */
