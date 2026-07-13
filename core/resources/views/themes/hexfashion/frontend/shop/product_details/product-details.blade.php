@@ -202,6 +202,18 @@
             display: none !important;
         }
 
+        /* Every box within the Size row is the same size as each other; same for the Color row */
+        .oxy-order-form-card .size-lists.select-list li {
+            width: 45px;
+            height: 45px;
+            flex: 0 0 auto;
+        }
+        .oxy-order-form-card .size-lists.color-list li {
+            width: 30px;
+            height: 30px;
+            flex: 0 0 auto;
+        }
+
         .oxy-order-form-card .form--input,
         .oxy-order-form-card select.form--input,
         .oxy-order-form-card textarea.form--input {
