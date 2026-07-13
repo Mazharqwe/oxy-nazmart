@@ -191,13 +191,6 @@
         }
 
         /* ---- Size / Color / attribute pickers ---- */
-        .oxy-picker-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
         .oxy-picker-title strong {
             font-weight: 600;
             font-size: 14px;
@@ -207,14 +200,13 @@
             border: none !important;
             background: transparent !important;
             padding: 0 !important;
-            width: auto !important;
-            max-width: 140px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #6b5940;
-            text-align: right;
+            display: inline !important;
+            width: 90px !important;
+            font-size: 14px;
+            font-weight: 400;
+            color: #1c1a16;
+            text-align: left;
         }
-        .oxy-picker-value.form--input::placeholder { color: #a99f8b; font-weight: 400; }
 
         .oxy-swatch-list {
             display: flex;
@@ -227,7 +219,6 @@
         .oxy-swatch-list li.list {
             cursor: pointer;
             border: 1.5px solid #e9e4d8;
-            border-radius: 8px;
             background: #f7f3ea;
             min-width: 44px;
             height: 40px;
@@ -251,18 +242,17 @@
             cursor: not-allowed;
         }
 
-        /* Color swatches: same rounded-box shape as size; selection shown the same way — a solid
-           border highlight — since the fill itself is the actual color and can't be swapped. */
+        /* Color swatches: plain square, selection shown as a border ring around the actual color fill */
         .oxy-color-swatch-list li.list {
-            width: 40px;
-            min-width: 40px;
-            height: 40px;
+            width: 34px;
+            min-width: 34px;
+            height: 34px;
             padding: 0;
             border: 2px solid #e9e4d8;
         }
         .oxy-color-swatch-list li.list:hover { border-color: #cdbb8d; }
         .oxy-color-swatch-list li.list.active {
-            border: 3px solid #6b5940;
+            border: 2px solid #6b5940;
             box-shadow: 0 0 0 1px #ffffff inset;
         }
         .oxy-order-form-card label,

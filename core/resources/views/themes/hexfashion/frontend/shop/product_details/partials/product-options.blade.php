@@ -46,8 +46,8 @@
                 <div
                     class="value-input-area single-input-list mt-4 size_list oxy-half {{ $quickView ? "quick-view-value-input-area" : "" }}">
                         <span class="input-title fw-500 color-heading oxy-picker-title">
-                            <strong class="color-light"> {{ __('Select Size') }}<span class="text-danger">*</span> </strong>
-                            <input readonly class="form--input value-size oxy-picker-value" name="size" type="text" value="" placeholder="{{ __('Not selected') }}">
+                            <strong class="color-light"> {{ __('Size:') }} </strong>
+                            <input readonly class="form--input value-size oxy-picker-value" name="size" type="text" value="">
                             <input type="hidden" id="selected_size">
                         </span>
                     <ul class="size-lists select-list oxy-swatch-list {{ $quickView ? "quick-view-size-lists" : "" }}" data-type="Size">
@@ -68,8 +68,8 @@
                 <div
                     class="value-input-area single-input-list mt-4 color_list oxy-half {{ $quickView ? "quick-view-value-input-area" : "" }}">
                         <span class="input-title fw-500 color-heading oxy-picker-title">
-                            <strong class="color-light"> {{ __('Select Color') }}<span class="text-danger">*</span> </strong>
-                            <input readonly class="form--input value-size oxy-picker-value" name="color" type="text" value="" placeholder="{{ __('Not selected') }}">
+                            <strong class="color-light"> {{ __('Color:') }} </strong>
+                            <input readonly class="form--input value-size oxy-picker-value" name="color" type="text" value="">
                             <input type="hidden" id="selected_color">
                         </span>
                     <ul class="size-lists color-list oxy-swatch-list oxy-color-swatch-list {{ $quickView ? "quick-view-size-lists" : "" }}" data-type="Color">
@@ -91,8 +91,8 @@
             <div
                 class="value-input-area single-input-list mt-4 attribute_options_list  {{ $quickView ? "quick-view-value-input-area" : "" }}">
                         <span class="input-title fw-500 color-heading input-list oxy-picker-title">
-                            <strong class="color-light"> {{ __('Select :attribute', ['attribute' => $attribute]) }}<span class="text-danger">*</span> </strong>
-                            <input readonly class="form--input value-size oxy-picker-value" type="text" value="" placeholder="{{ __('Not selected') }}">
+                            <strong class="color-light"> {{ $attribute }}: </strong>
+                            <input readonly class="form--input value-size oxy-picker-value" type="text" value="">
                             <input type="hidden" id="selected_attribute_option" name="selected_attribute_option">
                         </span>
                 <ul class="size-lists oxy-swatch-list {{ $quickView ? "quick-view-size-lists" : "" }}" data-type="{{ $attribute }}">
