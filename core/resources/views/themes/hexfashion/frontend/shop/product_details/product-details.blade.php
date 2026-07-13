@@ -202,6 +202,11 @@
             display: none !important;
         }
 
+        /* Selected color swatch: just the border highlight, no checkmark overlay (matches the size box) */
+        .oxy-order-form-card .color-list li.active::before {
+            content: none !important;
+        }
+
         /* Every box within the Size row is the same size as each other; same for the Color row */
         .oxy-order-form-card .size-lists.select-list li {
             width: 45px;
