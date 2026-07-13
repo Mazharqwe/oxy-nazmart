@@ -116,6 +116,151 @@
                 font-size: 16px;
             }
         }
+
+        /* ---- OXY-style direct order page ---- */
+        .oxy-order-page { background-color: #faf9f5; }
+        .oxy-order-header { margin-bottom: 30px; }
+        .oxy-order-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1c1a16;
+            margin: 0;
+        }
+        .oxy-order-badge {
+            color: #b79b6a;
+            font-weight: 600;
+            font-size: 22px;
+            margin-left: 12px;
+        }
+        .oxy-order-subtitle {
+            color: #8a8377;
+            font-size: 15px;
+            margin: 8px 0 0;
+        }
+        .oxy-order-image-card,
+        .oxy-order-form-card {
+            background: #ffffff;
+            border: 1px solid #e9e4d8;
+            border-radius: 18px;
+            padding: 24px;
+            height: 100%;
+        }
+        .oxy-order-image-card { position: relative; overflow: hidden; }
+        .oxy-order-form-card { text-align: center; }
+        .oxy-order-form-title {
+            display: inline-block;
+            font-size: 24px;
+            font-weight: 700;
+            color: #b79b6a;
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #cdbb8d;
+        }
+        .oxy-badge {
+            position: absolute;
+            z-index: 3;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.5;
+            padding: 4px 16px;
+            border-radius: 30px;
+            color: #ffffff;
+            white-space: nowrap;
+        }
+        .oxy-badge-discount {
+            top: 16px;
+            right: 16px;
+            background: #6b5940;
+        }
+
+        /* ---- Order form fields ---- */
+        .oxy-order-form-card .value-input-area,
+        .oxy-order-form-card .direct-order-wrapper,
+        .oxy-order-form-card .do-field,
+        .oxy-order-form-card form > .row {
+            text-align: left;
+        }
+        .oxy-order-form-card label,
+        .oxy-order-form-card .input-title strong {
+            font-weight: 600;
+            color: #1c1a16;
+            font-size: 14px;
+        }
+        .oxy-order-form-card .form--input,
+        .oxy-order-form-card select.form--input,
+        .oxy-order-form-card textarea.form--input {
+            background-color: #f7f3ea;
+            border: 1px solid #e9e4d8;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #1c1a16;
+        }
+        .oxy-order-form-card .form--input::placeholder { color: #a99f8b; }
+        .oxy-order-form-card .form--input:focus {
+            border-color: #cdbb8d;
+            box-shadow: none;
+            outline: none;
+        }
+
+        /* ---- Cash on Delivery note strip ---- */
+        .oxy-cod-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #f7f3ea;
+            border: 1px solid #e9e4d8;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1c1a16;
+        }
+        .oxy-cod-note i { color: #4a934a; font-size: 18px; }
+
+        /* ---- Submit button ---- */
+        .oxy-order-form-card .oxy-submit-btn {
+            background-color: #6b5940 !important;
+            border-color: #6b5940 !important;
+            color: #ffffff !important;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .oxy-order-form-card .oxy-submit-btn:hover { background-color: #594a35 !important; }
+
+        /* ---- Trust footer ---- */
+        .oxy-order-trust { border-top: 1px solid #e9e4d8; padding-top: 20px; }
+        .oxy-order-trust-text {
+            font-size: 13px;
+            color: #a08f6d;
+            margin: 0 0 18px;
+        }
+        .oxy-order-trust-icons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .oxy-order-trust-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #6f695c;
+        }
+        .oxy-order-trust-item i { font-size: 26px; color: #cdbb8d; }
+
+        @media only screen and (max-width: 991.98px) {
+            .oxy-order-image-card { margin-bottom: 24px; }
+        }
     </style>
 @endsection
 
@@ -146,12 +291,23 @@
     @endphp
 
         <!-- Shop Details area end -->
-    <section class="shop-details-area padding-top-100 padding-bottom-50">
+    <section class="shop-details-area oxy-order-page padding-top-100 padding-bottom-50">
         <div class="container container-one">
+            <div class="oxy-order-header">
+                <h2 class="oxy-order-title">
+                    {!! $product->name !!}
+                    @if(!empty($product->badge))
+                        <span class="oxy-order-badge">{{ $product?->badge?->name }}</span>
+                    @endif
+                </h2>
+                <p class="oxy-order-subtitle">{{ __('Kindly fill the form below & we will deliver next day') }}</p>
+            </div>
             <div class="row">
                 @include(include_theme_path('shop.product_details.partials.product-images-slider'))
                 <div class="col-lg-6">
-                    @include(include_theme_path('shop.product_details.partials.product-options'))
+                    <div class="oxy-order-form-card">
+                        @include(include_theme_path('shop.product_details.partials.product-options'))
+                    </div>
                 </div>
             </div>
         </div>

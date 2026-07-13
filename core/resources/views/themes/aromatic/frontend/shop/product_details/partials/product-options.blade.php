@@ -1,15 +1,8 @@
 <div class="single-shop-details-wrapper">
-    @if($campaign_product !== null && $campaign_product->status !== 'draft')
+    @if($campaign_product !== null && $campaign_product->status !== 'draft' && $is_expired)
         <div class="campaign_countdown_wrapper mb-5">
             <h3 class="text-capitalize text-start mb-3">{{$campaign_name}}</h3>
-
-            @if($is_expired)
-                <div class="global-timer"></div>
-            @else
-                <div class="text-capitalize alert alert-warning">
-                    <h5>{{__('The Campaign is over or not yet started')}}</h5>
-                </div>
-            @endif
+            <div class="global-timer"></div>
         </div>
     @endif
 

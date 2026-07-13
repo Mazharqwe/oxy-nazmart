@@ -47,9 +47,6 @@
 @endphp
 
 <div class="direct-order-wrapper mt-4">
-    <h3 class="details-title mb-2">{{ __('Order Now') }}</h3>
-    <p class="mb-4 color-light">{{ __('Kindly fill the form & we will deliver in 2-3 working days.') }}</p>
-
     @if($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0 ps-3">
@@ -154,10 +151,33 @@
             </div>
         @endguest
 
+        <div class="oxy-cod-note mt-3">
+            <i class="las la-money-bill-wave"></i>
+            <span>{{ __('Cash on Delivery — Pay when you receive') }}</span>
+        </div>
+
         <div class="quantity-btn mt-3">
-            <button type="submit" class="cmn-btn cmn-btn-bg-heading radius-0 w-100" {{ $do_max_qty > 0 ? '' : 'disabled' }}>
-                {{ __('Submit Order') }}
+            <button type="submit" class="cmn-btn cmn-btn-bg-heading radius-0 w-100 oxy-submit-btn" {{ $do_max_qty > 0 ? '' : 'disabled' }}>
+                <i class="las la-shopping-cart"></i> {{ __('Confirm Order (Cash on Delivery)') }}
             </button>
         </div>
     </form>
+
+    <div class="oxy-order-trust mt-4">
+        <p class="oxy-order-trust-text">{{ __('No prepayment required. Our team will call you to confirm.') }}</p>
+        <div class="oxy-order-trust-icons">
+            <div class="oxy-order-trust-item">
+                <i class="las la-truck"></i>
+                <span>{{ __('Free Delivery') }}</span>
+            </div>
+            <div class="oxy-order-trust-item">
+                <i class="las la-box"></i>
+                <span>{{ __('Cash on Delivery') }}</span>
+            </div>
+            <div class="oxy-order-trust-item">
+                <i class="las la-shield-alt"></i>
+                <span>{{ __('Easy Returns') }}</span>
+            </div>
+        </div>
+    </div>
 </div>

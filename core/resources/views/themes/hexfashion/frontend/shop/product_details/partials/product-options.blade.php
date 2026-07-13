@@ -1,47 +1,44 @@
 <div class="single-shop-details-wrapper">
-    @if($campaign_product !== null && $campaign_product->status !== 'draft')
+    @if($campaign_product !== null && $campaign_product->status !== 'draft' && $is_expired)
         <div class="campaign_countdown_wrapper mb-5">
             <h3 class="text-capitalize text-start mb-3">{{$campaign_name}}</h3>
-
-            @if($is_expired)
-                <div class="global-timer"></div>
-            @else
-                <div class="text-capitalize alert alert-warning">
-                    <h5>{{__('The Campaign is over or not yet started')}}</h5>
-                </div>
-            @endif
+            <div class="global-timer"></div>
         </div>
     @endif
 
-    <div class="name_badge">
-        <h2 class="details-title"> {!! $product->name !!}
-            @if(!empty($product->badge))
-                <span class="global-card-thumb-badge-box global-card-thumb-badge-box-product-details  bg-color-new "> {{$product?->badge?->name}} </span>
-            @endif
-        </h2>
-    </div>
+    @if($quickView)
+        <div class="name_badge">
+            <h2 class="details-title"> {!! $product->name !!}
+                @if(!empty($product->badge))
+                    <span class="global-card-thumb-badge-box global-card-thumb-badge-box-product-details  bg-color-new "> {{$product?->badge?->name}} </span>
+                @endif
+            </h2>
+        </div>
 
-    {!! render_product_star_rating_markup_with_count($product) !!}
-    <div class="status-details d-flex align-items-center mt-4">
-        <span class="status-details-title fw-500 me-5"> {{__('Status')}} </span>
-        <a id="{{ $quickView ? "quick_view_" : "" }}stock" href="javascript:void(0)"
-           data-stock-text='{!! $stock_count > 0 ? '<span class="text-success">'.__('In Stock').'</span>' : '<span class="text-danger">'.__('Out of Stock').'</span>' !!}'
-           class="status-details-title color-stock fw-600"> {!! $stock_count > 0 ? '<span class="text-success">'.__('In Stock').'</span>' : '<span class="text-danger">'.__('Out of Stock').'</span>' !!} </a>
-    </div>
+        {!! render_product_star_rating_markup_with_count($product) !!}
+        <div class="status-details d-flex align-items-center mt-4">
+            <span class="status-details-title fw-500 me-5"> {{__('Status')}} </span>
+            <a id="quick_view_stock" href="javascript:void(0)"
+               data-stock-text='{!! $stock_count > 0 ? '<span class="text-success">'.__('In Stock').'</span>' : '<span class="text-danger">'.__('Out of Stock').'</span>' !!}'
+               class="status-details-title color-stock fw-600"> {!! $stock_count > 0 ? '<span class="text-success">'.__('In Stock').'</span>' : '<span class="text-danger">'.__('Out of Stock').'</span>' !!} </a>
+        </div>
 
-    @php
-       $final_price = calculatePrice($sale_price, $product);
-    @endphp
+        @php
+           $final_price = calculatePrice($sale_price, $product);
+        @endphp
 
-    <div class="price-update-through mt-4">
-        <h3 class="ff-rubik flash-prices"
-            data-main-price="{{ $final_price }}"
-            data-currency-symbol="{{ site_currency_symbol() }}"
-            id="{{ $quickView ? "quick-view-price" : "price" }}"
-        > {{amount_with_currency_symbol($final_price)}} </h3>
-        <span
-            class="fs-22 flash-old-prices"> {{$deleted_price != null ? amount_with_currency_symbol($deleted_price) : ''}} </span>
-    </div>
+        <div class="price-update-through mt-4">
+            <h3 class="ff-rubik flash-prices"
+                data-main-price="{{ $final_price }}"
+                data-currency-symbol="{{ site_currency_symbol() }}"
+                id="quick-view-price"
+            > {{amount_with_currency_symbol($final_price)}} </h3>
+            <span
+                class="fs-22 flash-old-prices"> {{$deleted_price != null ? amount_with_currency_symbol($deleted_price) : ''}} </span>
+        </div>
+    @else
+        <h3 class="oxy-order-form-title">{{ __('Order Now') }}</h3>
+    @endif
 
     <div class="value-input-area">
         @if($productSizes->count() > 0 && !empty(current(current($productSizes))))
@@ -235,22 +232,6 @@
                     </div>
                 @endforeach
             @endif
-        </div>
-        <div class="details-checkout-shop shop-border-top pt-4 mt-4">
-            <span class="guaranteed-checkout fw-500 color-heading"> {{__('Guaranteed Safe Checkout')}} </span>
-            @php
-                $payment_gateway_images = \App\Models\PaymentGateway::where('status', 1)->permittedPaymentGateway()->get('image')->pluck('image');
-            @endphp
-
-            <ul class="payment-list mt-3">
-                @foreach($payment_gateway_images as $image)
-                    <li class="single-list">
-                        <a href="javascript:void(0)">
-                            {!! render_image_markup_by_attachment_id($image) !!}
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
         </div>
     </div>
 </div>
