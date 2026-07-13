@@ -251,33 +251,20 @@
             cursor: not-allowed;
         }
 
-        /* Color swatches: plain squares (no text) get a ring + check mark instead of bg/text swap */
+        /* Color swatches: same rounded-box shape as size; selection shown the same way — a solid
+           border highlight — since the fill itself is the actual color and can't be swapped. */
         .oxy-color-swatch-list li.list {
-            width: 34px;
-            height: 34px;
-            min-width: 34px;
+            width: 40px;
+            min-width: 40px;
+            height: 40px;
             padding: 0;
-            border: 2px solid #ffffff;
-            outline: 1.5px solid #e9e4d8;
-            border-radius: 50%;
-            position: relative;
+            border: 2px solid #e9e4d8;
         }
-        .oxy-color-swatch-list li.list:hover { outline-color: #cdbb8d; }
+        .oxy-color-swatch-list li.list:hover { border-color: #cdbb8d; }
         .oxy-color-swatch-list li.list.active {
-            outline: 2px solid #6b5940;
+            border: 3px solid #6b5940;
+            box-shadow: 0 0 0 1px #ffffff inset;
         }
-        .oxy-color-swatch-list li.list .oxy-swatch-check {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            color: #ffffff;
-            text-shadow: 0 0 2px rgba(0,0,0,.7);
-            opacity: 0;
-        }
-        .oxy-color-swatch-list li.list.active .oxy-swatch-check { opacity: 1; }
         .oxy-order-form-card label,
         .oxy-order-form-card .input-title strong {
             font-weight: 600;
@@ -359,6 +346,20 @@
         @media only screen and (max-width: 991.98px) {
             .oxy-order-image-card { margin-bottom: 24px; }
         }
+
+        /* ---- Product meta (category / unit / SKU) under the image card ---- */
+        .oxy-image-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 14px;
+            padding-top: 18px;
+            border-top: 1px solid #e9e4d8;
+            font-size: 13px;
+            color: #6f695c;
+        }
+        .oxy-image-meta-item a { color: #6f695c; font-weight: 600; }
+        .oxy-image-meta-item a:hover { color: #6b5940; }
+        .oxy-meta-sep { margin: 0 4px; color: #cdbb8d; }
     </style>
 @endsection
 

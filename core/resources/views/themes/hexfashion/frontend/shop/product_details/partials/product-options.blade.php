@@ -79,7 +79,7 @@
                                     title="{{ optional($product_color)->name }}"
                                     data-value="{{ optional($product_color)->id }}"
                                     data-display-value="{{ optional($product_color)->name }}"
-                                ><i class="las la-check oxy-swatch-check"></i></li>
+                                ></li>
                             @endif
                         @endforeach
                     </ul>
@@ -185,57 +185,59 @@
             </ul>
         </div>
     </div>
-    <div class="shop-details-stock shop-border-top pt-4 mt-4">
-        <ul class="stock-category">
-            <li class="category-list">
-                <span class="list-item fw-600">
-                    <a href="{{route('tenant.shop.category.products', [$product?->category?->slug, 'category'])}}">{{$product?->category?->name}}</a>
-
-                    @if($product?->subCategory?->slug)
-                        |
-                        <a href="{{route('tenant.shop.category.products', [$product?->subCategory?->slug, 'subcategory'])}}">{{$product?->subCategory?->name}}</a>
-                    @endif
-
-                    @foreach($product->childCategory ?? [] as $child_category)
-                        @if($loop->first)
-                            |
-                        @endif
-                        <a href="{{route('tenant.shop.category.products', [$child_category?->slug, 'child-category'])}}"> {{$child_category->name}} </a>
-
-                        @if(!$loop->last)
-                            ,
-                        @endif
-                    @endforeach
-                </span>
-            </li>
-            @if($product->uom != null)
+    @if($quickView)
+        <div class="shop-details-stock shop-border-top pt-4 mt-4">
+            <ul class="stock-category">
                 <li class="category-list">
-                    <span> {{__('Unit:')}} </span>
-                    <a class="list-item fw-600" href="javascript:void(0)">
-                        <span>{{$product?->uom?->quantity}}</span>
-                        <span>{{$product?->uom?->uom_details?->name}}</span>
-                    </a>
+                    <span class="list-item fw-600">
+                        <a href="{{route('tenant.shop.category.products', [$product?->category?->slug, 'category'])}}">{{$product?->category?->name}}</a>
+
+                        @if($product?->subCategory?->slug)
+                            |
+                            <a href="{{route('tenant.shop.category.products', [$product?->subCategory?->slug, 'subcategory'])}}">{{$product?->subCategory?->name}}</a>
+                        @endif
+
+                        @foreach($product->childCategory ?? [] as $child_category)
+                            @if($loop->first)
+                                |
+                            @endif
+                            <a href="{{route('tenant.shop.category.products', [$child_category?->slug, 'child-category'])}}"> {{$child_category->name}} </a>
+
+                            @if(!$loop->last)
+                                ,
+                            @endif
+                        @endforeach
+                    </span>
                 </li>
-            @endif
-            <li class="category-list">
-                <span> {{__('SKU:')}} </span>
-                <a class="list-item fw-600" href="javascript:void(0)"> {{$product?->inventory?->sku}} </a>
-            </li>
-        </ul>
-        <div class="delivery-options delivery-parent mt-4">
-            @if($product->product_delivery_option != null)
-                @foreach($product->product_delivery_option as $option)
-                    <div class="delivery-item d-flex">
-                        <div class="icon">
-                            <i class="{{ $option->icon }}"></i>
+                @if($product->uom != null)
+                    <li class="category-list">
+                        <span> {{__('Unit:')}} </span>
+                        <a class="list-item fw-600" href="javascript:void(0)">
+                            <span>{{$product?->uom?->quantity}}</span>
+                            <span>{{$product?->uom?->uom_details?->name}}</span>
+                        </a>
+                    </li>
+                @endif
+                <li class="category-list">
+                    <span> {{__('SKU:')}} </span>
+                    <a class="list-item fw-600" href="javascript:void(0)"> {{$product?->inventory?->sku}} </a>
+                </li>
+            </ul>
+            <div class="delivery-options delivery-parent mt-4">
+                @if($product->product_delivery_option != null)
+                    @foreach($product->product_delivery_option as $option)
+                        <div class="delivery-item d-flex">
+                            <div class="icon">
+                                <i class="{{ $option->icon }}"></i>
+                            </div>
+                            <div class="content">
+                                <h6 class="title">{{ $option->title }}</h6>
+                                <p>{{ $option->sub_title }}</p>
+                            </div>
                         </div>
-                        <div class="content">
-                            <h6 class="title">{{ $option->title }}</h6>
-                            <p>{{ $option->sub_title }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            @endif
+                    @endforeach
+                @endif
+            </div>
         </div>
-    </div>
+    @endif
 </div>

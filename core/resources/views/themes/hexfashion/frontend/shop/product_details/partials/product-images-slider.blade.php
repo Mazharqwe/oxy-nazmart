@@ -46,5 +46,35 @@
                 @endforeach
             </div>
         </div>
+
+        <div class="oxy-image-meta mt-4">
+            <span class="oxy-image-meta-item">
+                <a href="{{route('tenant.shop.category.products', [$product?->category?->slug, 'category'])}}">{{$product?->category?->name}}</a>
+
+                @if($product?->subCategory?->slug)
+                    <span class="oxy-meta-sep">|</span>
+                    <a href="{{route('tenant.shop.category.products', [$product?->subCategory?->slug, 'subcategory'])}}">{{$product?->subCategory?->name}}</a>
+                @endif
+
+                @foreach($product->childCategory ?? [] as $child_category)
+                    @if($loop->first)
+                        <span class="oxy-meta-sep">|</span>
+                    @endif
+                    <a href="{{route('tenant.shop.category.products', [$child_category?->slug, 'child-category'])}}"> {{$child_category->name}} </a>
+
+                    @if(!$loop->last)
+                        ,
+                    @endif
+                @endforeach
+            </span>
+
+            @if($product->uom != null)
+                <span class="oxy-image-meta-item">
+                    {{__('Unit:')}} {{$product?->uom?->quantity}} {{$product?->uom?->uom_details?->name}}
+                </span>
+            @endif
+
+            <span class="oxy-image-meta-item">{{__('SKU:')}} {{$product?->inventory?->sku}}</span>
+        </div>
     </div>
 </div>
