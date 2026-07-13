@@ -186,6 +186,22 @@
             color: #1c1a16;
             font-size: 14px;
         }
+
+        /* Hide the selected-value text box next to Size:/Color: — the highlighted swatch is enough */
+        .oxy-order-form-card .input-title input.value-size {
+            display: none !important;
+        }
+
+        /* Only the chosen swatch should stand out — leave every other option looking untouched */
+        .oxy-order-form-card .size-lists li.disabled {
+            opacity: 1 !important;
+            cursor: pointer !important;
+        }
+        .oxy-order-form-card .size-lists li.disabled::before,
+        .oxy-order-form-card .size-lists li.disabled::after {
+            display: none !important;
+        }
+
         .oxy-order-form-card .form--input,
         .oxy-order-form-card select.form--input,
         .oxy-order-form-card textarea.form--input {
